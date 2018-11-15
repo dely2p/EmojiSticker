@@ -26,6 +26,27 @@ class ViewController: UIViewController {
         imageView.backgroundColor = .blue
 
         view.addSubview(imageView)
+        
+        let request = VNDetectFaceRectanglesRequest { (req, err) in
+            if let err = err {
+                print("failed to detect faces: ", err)
+                return
+            }
+            req.results?.forEach({(res) in
+                print(res)
+            })
+        }
+
+        guard let cgImage = image.cgImage else {
+            return
+        }
+
+        let handler = VNImageRequestHandler(cgImage: cgImage, options: [:])
+        do {
+            try handler.perform([request])
+        } catch let reqErr {
+            print("Failed to perform request: ", reqErr)
+        }
     }
 
 }
