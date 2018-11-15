@@ -33,12 +33,19 @@ class ViewController: UIViewController {
                 return
             }
             req.results?.forEach({(res) in
+                guard let faceObservation = res as? VNFaceObservation else { return }
+                
+                let x = self.view.frame.width * faceObservation.boundingBox.origin.x
+                let height = scaledHeight * faceObservation.boundingBox.height
+                let y = scaledHeight * (1 - faceObservation.boundingBox.height) - height
+                let width = self.view.frame.width * faceObservation.boundingBox.width
+                
                 let redView = UIView()
                 redView.backgroundColor = .red
-                redView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+                redView.alpha = 0.4
+                redView.frame = CGRect(x: x, y: y, width: width, height: height)
                 self.view.addSubview(redView)
                 
-                guard let faceObservation = res as? VNFaceObservation else { return }
                 print(faceObservation.boundingBox)
             })
         }
