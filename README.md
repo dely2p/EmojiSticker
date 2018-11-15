@@ -7,8 +7,8 @@
 
 - 사진 속 얼굴이 하나일 때
 
-	<img src="./img/one.png" width="30%">
+	<img src="./img/1.png" width="30%">
 
 - 사진 속 얼굴이 여러개일 때
 
-	<img src="./img/two.png" width="30%"> 
+	<img src="./img/2.png" width="30%"> 
