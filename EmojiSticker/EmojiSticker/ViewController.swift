@@ -33,7 +33,13 @@ class ViewController: UIViewController {
                 return
             }
             req.results?.forEach({(res) in
-                print(res)
+                let redView = UIView()
+                redView.backgroundColor = .red
+                redView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+                self.view.addSubview(redView)
+                
+                guard let faceObservation = res as? VNFaceObservation else { return }
+                print(faceObservation.boundingBox)
             })
         }
 
