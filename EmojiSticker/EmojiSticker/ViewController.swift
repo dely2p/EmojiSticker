@@ -9,9 +9,29 @@
 import UIKit
 import Vision
 
-struct FaceInfo {
-    let size : (width: Int, height: Int)
-    let faceCount : Int
+struct FaceInfo: Decodable {
+    let info : Info
+    let faces : [Faces]
+}
+
+struct Info: Decodable {
+    let size: Size
+    let faceCount: Int
+}
+
+struct Size: Decodable {
+    let width: Int
+    let height: Int
+}
+
+struct Faces: Decodable {
+    let gender: FaceData
+    let emotion: FaceData
+}
+
+struct FaceData: Decodable {
+    let value: String
+    let confidence: Double
 }
 
 class ViewController: UIViewController {
@@ -42,9 +62,9 @@ class ViewController: UIViewController {
         
         let boundary = generateBoundaryString()
         request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        request.addValue("mBMpvpj5zqP6d0eidQM4", forHTTPHeaderField: "X-Naver-Client-Id")
-        request.addValue("NRhG38_jQo", forHTTPHeaderField: "X-Naver-Client-Secret")
-        request.addValue("96703", forHTTPHeaderField: "Content-Length")
+        request.addValue("amhZeyPiHsDSugB9Pifg", forHTTPHeaderField: "X-Naver-Client-Id")
+        request.addValue("fPwJI_FlhX", forHTTPHeaderField: "X-Naver-Client-Secret")
+//        request.addValue("96703", forHTTPHeaderField: "Content-Length")
         
         guard let imageData = imageView.image?.jpegData(compressionQuality: 1) else { return }
         
@@ -56,11 +76,12 @@ class ViewController: UIViewController {
             guard let data = data, error == nil else { return }
             
             do {
-                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                    return
-                }
-                let faceInfo = FaceInfo(json: json)
-                print(faceInfo?.faceCount)
+                let face = try JSONDecoder().decode(FaceInfo.self, from: data)
+//                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+//                    return
+//                }
+//                let faceInfo = FaceInfo(json: json)
+                print(face.faces[0].emotion.value)
             } catch let jsonErr{
                 print("Error ", jsonErr)
             }
@@ -107,16 +128,16 @@ extension NSMutableData {
     }
 }
 
-extension FaceInfo {
-    init?(json: [String:Any]) {
-        guard let faceCount = json["faceCount"] as? Int,
-            let size = json["size"] as? [String:Int],
-            let width = size["width"],
-            let height = size["height"]
-        else {
-            return nil
-        }
-        self.faceCount = faceCount
-        self.size = (width, height)
-    }
-}
+//extension FaceInfo {
+//    init?(json: [String:Any]) {
+//        guard let faceCount = json["faceCount"] as? Int,
+//            let size = json["size"] as? [String:Int],
+//            let width = size["width"],
+//            let height = size["height"]
+//        else {
+//            return nil
+//        }
+//        self.faceCount = faceCount
+//        self.size = (width, height)
+//    }
+//}
