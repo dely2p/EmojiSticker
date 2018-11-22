@@ -92,27 +92,11 @@ class ViewController: UIViewController {
     func generateBoundaryString() -> String {
         return "Boundary-\(UUID().uuidString)"
     }
-
 }
 
 extension NSMutableData {
-    
     func appendString(_ string: String) {
         let data = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
         append(data!)
     }
 }
-
-//extension FaceInfo {
-//    init?(json: [String:Any]) {
-//        guard let faceCount = json["faceCount"] as? Int,
-//            let size = json["size"] as? [String:Int],
-//            let width = size["width"],
-//            let height = size["height"]
-//        else {
-//            return nil
-//        }
-//        self.faceCount = faceCount
-//        self.size = (width, height)
-//    }
-//}
