@@ -9,38 +9,13 @@
 import UIKit
 import Vision
 
-struct FaceInfo: Decodable {
-    let info : Info
-    let faces : [Faces]
-}
-
-struct Info: Decodable {
-    let size: Size
-    let faceCount: Int
-}
-
-struct Size: Decodable {
-    let width: Int
-    let height: Int
-}
-
-struct Faces: Decodable {
-    let gender: FaceData
-    let emotion: FaceData
-}
-
-struct FaceData: Decodable {
-    let value: String
-    let confidence: Double
-}
-
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // set imageView
-        guard let image = UIImage(named: "sample1") else {
+        guard let image = UIImage(named: "sample2") else {
             return
         }
         let imageView = UIImageView(image: image)
