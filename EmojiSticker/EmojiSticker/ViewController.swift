@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import Vision
 
 class ViewController: UIViewController {
 
@@ -28,75 +27,12 @@ class ViewController: UIViewController {
         
         view.addSubview(imageView)
         
-        
-        // set URLSession
-        guard let url = URL(string: "https://openapi.naver.com/v1/vision/face") else { return }
-        
-        var request = URLRequest(url: url)
-        request.httpMethod = "POST"
-        
-        let boundary = generateBoundaryString()
-        request.addValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-        request.addValue("amhZeyPiHsDSugB9Pifg", forHTTPHeaderField: "X-Naver-Client-Id")
-        request.addValue("fPwJI_FlhX", forHTTPHeaderField: "X-Naver-Client-Secret")
-//        request.addValue("96703", forHTTPHeaderField: "Content-Length")
-        
-        guard let imageData = imageView.image?.jpegData(compressionQuality: 1) else { return }
-        
-        let param: [String:String]? = nil
-        
-        request.httpBody = createBodyWithParameters(parameters: param, filePathKey: "image", imageDataKey: imageData, boundary: boundary) as Data
-        
-        let task = URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data, error == nil else { return }
-            
-            do {
-                let face = try JSONDecoder().decode(FaceInfo.self, from: data)
-//                guard let json = try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-//                    return
-//                }
-//                let faceInfo = FaceInfo(json: json)
-                print(face.faces[0].emotion.value)
-            } catch let jsonErr{
-                print("Error ", jsonErr)
-            }
+        let sessionManager = URLSessionManager()
+        guard let imageOfChoice = imageView.image else {
+            return
         }
-        task.resume()
-        
-    }
-    
-    func createBodyWithParameters(parameters: [String: String]?, filePathKey: String?, imageDataKey: Data, boundary: String) -> NSData {
-        let body = NSMutableData();
-        
-        if parameters != nil {
-            for (key, value) in parameters! {
-                body.appendString("--\(boundary)\r\n")
-                body.appendString("Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n")
-                body.appendString("\(value)\r\n")
-            }
-        }
-        
-        let filename = "sample1.jpg"
-        let mimetype = "image/jpg"
-        
-        body.appendString("--\(boundary)\r\n")
-        body.appendString("Content-Disposition: form-data; name=\"\(filePathKey!)\"; filename=\"\(filename)\"\r\n")
-        body.appendString("Content-Type: \(mimetype)\r\n\r\n")
-        body.append(imageDataKey as Data)
-        body.appendString("\r\n")
-        body.appendString("--\(boundary)--\r\n")
-        
-        return body
-    }
-    
-    func generateBoundaryString() -> String {
-        return "Boundary-\(UUID().uuidString)"
+        sessionManager.makeURLSession(image: imageOfChoice)
     }
 }
 
-extension NSMutableData {
-    func appendString(_ string: String) {
-        let data = string.data(using: String.Encoding.utf8, allowLossyConversion: true)
-        append(data!)
-    }
-}
+

@@ -9,13 +9,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "EmojiSticker/ViewController.swift"
-            timestampString = "564512817.910098"
+            filePath = "EmojiSticker/URLSessionManager.swift"
+            timestampString = "564587072.275261"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "createBodyWithParameters(parameters:filePathKey:imageDataKey:boundary:)"
+            startingLineNumber = "39"
+            endingLineNumber = "39"
+            landmarkName = "makeURLSession(image:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
