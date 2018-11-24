@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FaceData: Decodable {
+struct FaceData: Codable {
     let value: String
     let confidence: Double
 }

@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Info: Decodable {
+struct Info: Codable {
     let size: Size
     let faceCount: Int
 }

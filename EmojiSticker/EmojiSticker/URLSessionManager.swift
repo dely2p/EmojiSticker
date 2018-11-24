@@ -33,13 +33,15 @@ class URLSessionManager {
         
         let task = session.dataTask(with: request) { (data, response, error) in
             guard let data = data, error == nil else { return }
+
+            do{
+                let archivedObject = try NSKeyedArchiver.archivedData(withRootObject: data, requiringSecureCoding: false)
+                UserDefaults.standard.set(archivedObject, forKey: "faceObject");
             
-            do {
-                let face = try JSONDecoder().decode(FaceInfo.self, from: data)
-                print(face.faces[0].emotion.value)
-            } catch let jsonErr{
-                print("Error ", jsonErr)
+            } catch {
+                print("archive error")
             }
+            
         }
         task.resume()
     }

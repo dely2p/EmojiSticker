@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Faces: Decodable {
+struct Faces: Codable {
     let gender: FaceData
     let emotion: FaceData
 }

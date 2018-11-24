@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct FaceInfo: Decodable {
+struct FaceInfo: Codable {
     let info : Info
     let faces : [Faces]
 }

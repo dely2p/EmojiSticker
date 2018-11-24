@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Size: Decodable {
+struct Size: Codable {
     let width: Int
     let height: Int
 }
