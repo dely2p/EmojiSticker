@@ -11,4 +11,5 @@ import Foundation
 struct Faces: Codable {
     let gender: FaceData
     let emotion: FaceData
+    let roi : PlaceInfo
 }

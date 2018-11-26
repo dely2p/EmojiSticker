@@ -18,6 +18,7 @@
 		A3DC7885219DA1F000060F6B /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3DC7883219DA1F000060F6B /* Main.storyboard */; };
 		A3DC7887219DA1F100060F6B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A3DC7886219DA1F100060F6B /* Assets.xcassets */; };
 		A3DC788A219DA1F100060F6B /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A3DC7888219DA1F100060F6B /* LaunchScreen.storyboard */; };
+		A3FF5D3421AC15EA0087EC47 /* PlaceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3FF5D3321AC15EA0087EC47 /* PlaceInfo.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		A3DC7886219DA1F100060F6B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A3DC7889219DA1F100060F6B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		A3DC788B219DA1F100060F6B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A3FF5D3321AC15EA0087EC47 /* PlaceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceInfo.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +80,7 @@
 				A3B3716D21A694EA005EC4C9 /* Faces.swift */,
 				A3B3716F21A69500005EC4C9 /* FaceData.swift */,
 				A3B3717321A6AF7C005EC4C9 /* URLSessionManager.swift */,
+				A3FF5D3321AC15EA0087EC47 /* PlaceInfo.swift */,
 			);
 			path = EmojiSticker;
 			sourceTree = "<group>";
@@ -153,6 +156,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A3FF5D3421AC15EA0087EC47 /* PlaceInfo.swift in Sources */,
 				A3B3716E21A694EA005EC4C9 /* Faces.swift in Sources */,
 				A3B3716821A69474005EC4C9 /* FaceInfo.swift in Sources */,
 				A3B3716C21A694B1005EC4C9 /* Size.swift in Sources */,
