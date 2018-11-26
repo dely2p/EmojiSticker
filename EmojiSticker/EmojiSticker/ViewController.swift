@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Vision
 
 class ViewController: UIViewController {
 
@@ -21,6 +22,7 @@ class ViewController: UIViewController {
         let scaledHeight = view.frame.width / image.size.width * image.size.height
         imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: scaledHeight)
         imageView.backgroundColor = .blue
+        print("CGRect: \(view.frame.width), \(scaledHeight)")
         
         // set button
         let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
@@ -43,20 +45,21 @@ class ViewController: UIViewController {
             guard let faceObject = UserDefaults.standard.object(forKey: "faceObject") as? Data else { return }
             guard let unarchiveObject = try NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(faceObject) as? Data else { return }
             let data = try JSONDecoder().decode(FaceInfo.self, from: unarchiveObject)
-            print(data)
+            makeSticker(faces: data.faces)
         } catch {
             print("unarchive err")
         }
         
     }
     
-//    override func viewDidAppear(_ animated: Bool) {
-//        if let faces = UserDefaults.standard.object(forKey: "faceObject") as? [Faces] {
-//            for face in faces {
-//                print("emotion: \(face.emotion), gender: \(face.gender)")
-//            }
-//        }
-//    }
+    func makeSticker(faces: [Faces]) {
+        for face in faces {
+            let redView = UIView()
+            redView.backgroundColor = .red
+            redView.alpha = 0.4
+            redView.frame = CGRect(x: face.roi.x/3, y: face.roi.y/3, width: face.roi.width/2, height: face.roi.height/2)
+            self.view.addSubview(redView)
+            print("x: \(face.roi.x), y: \(face.roi.y)")
+        }
+    }
 }
-
-
