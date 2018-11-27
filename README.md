@@ -18,4 +18,4 @@
 	- 표정 데이터 가져와서 그에 맞는 이모지 설정 & 얼굴 크기에 맞게 설정하기
 	- "angry":"😠", "disgust":"☹️", "fear":"😨", "laugh":"🤣", "neutral":"😐", "sad":"😭", "surprise":"😮", "smile":"😊", "talking":"🤪"
 	
-		<img src="./img/3.png" width="30%">   <img src="./img/4.png" width="30%">
+		<img src="./img/3_.png" width="30%">   <img src="./img/4_.png" width="30%">
