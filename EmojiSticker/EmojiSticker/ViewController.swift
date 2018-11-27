@@ -53,13 +53,17 @@ class ViewController: UIViewController {
     }
     
     func makeSticker(faces: [Faces]) {
+//        let faceEmotionOption = ["😠", "☹️", "😨", "🤣", "😐", "😭", "😮", "😊", "🤪"]
+        //angry, disgust, fear, laugh, neutral, sad, surprise, smile, talking
         for face in faces {
-            let redView = UIView()
-            redView.backgroundColor = .red
-            redView.alpha = 0.4
-            redView.frame = CGRect(x: face.roi.x/3, y: face.roi.y/3, width: face.roi.width/2, height: face.roi.height/2)
-            self.view.addSubview(redView)
-            print("x: \(face.roi.x), y: \(face.roi.y)")
+            let label = UILabel(frame: CGRect(x: face.roi.x/3, y: face.roi.y/3, width: face.roi.width/2, height: face.roi.height/2))
+
+            label.textAlignment = .center
+            label.adjustsFontSizeToFitWidth = true
+            label.font = label.font.withSize(CGFloat(face.roi.width/2))
+            label.text = "😍"
+            label.backgroundColor = .yellow
+            self.view.addSubview(label)
         }
     }
 }
