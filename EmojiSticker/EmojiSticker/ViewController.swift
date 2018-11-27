@@ -17,14 +17,19 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         
         // set imageView
-        guard let image = UIImage(named: "sample2") else { return }
+        guard let image = UIImage(named: "sample3") else { return }
         let imageView = UIImageView(image: image)
         imageView.contentMode = .scaleAspectFit
         
         let scaledHeight = view.frame.width / image.size.width * image.size.height
-        imageView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: scaledHeight)
-        imageView.backgroundColor = .blue
-        print("CGRect: \(view.frame.width), \(scaledHeight)")
+        let size = CGSize(width: view.frame.width, height: scaledHeight)
+        let rect = CGRect(x: 0, y: 0, width: size.width, height: size.height)
+        imageView.frame = rect
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, 1.0)
+        image.draw(in: rect)
+        let newImage: UIImage! = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
         
         // set button
         let button = UIButton(frame: CGRect(x: 100, y: 300, width: 100, height: 50))
@@ -38,8 +43,12 @@ class ViewController: UIViewController {
         
         // set URLSession
         let sessionManager = URLSessionManager()
-        guard let imageOfChoice = imageView.image else { return }
+        guard let imageOfChoice = newImage else { return }
         sessionManager.makeURLSession(image: imageOfChoice)
+        
+        if let _ = UserDefaults.standard.object(forKey: "faceObject"){
+            UserDefaults.standard.removeObject(forKey: "faceObject")
+        }
     }
     
     @objc func makeEmojiByFaceEmotion(sender: UIButton!) {
@@ -56,12 +65,13 @@ class ViewController: UIViewController {
     
     func makeSticker(faces: [Faces]) {
         for face in faces {
-            let label = UILabel(frame: CGRect(x: face.roi.x/3, y: face.roi.y/3, width: face.roi.width/2, height: face.roi.height/2))
-
+            let label = UILabel(frame: CGRect(x: face.roi.x, y: face.roi.y, width: face.roi.width, height: face.roi.height))
+            
             label.textAlignment = .center
             label.adjustsFontSizeToFitWidth = true
-            label.font = label.font.withSize(CGFloat(face.roi.width/2))
+            label.font = label.font.withSize(CGFloat(face.roi.width))
             label.text = emoji[face.emotion.value]
+//            label.backgroundColor = .yellow
             self.view.addSubview(label)
         }
     }
