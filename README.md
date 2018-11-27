@@ -5,10 +5,17 @@
 
 1. Vision Framework를 사용하여 사진 속 얼굴을 찾고, 그 위에 빨간 네모 그려주기
 
-- 사진 속 얼굴이 하나일 때
+	- 사진 속 얼굴이 하나일 때
+	
+		<img src="./img/1.png" width="30%">
+	
+	- 사진 속 얼굴이 여러개일 때
+	
+		<img src="./img/2.png" width="30%"> 
+	
+2. Naver Clova Face API를 사용하여 사진 속 얼굴을 찾고, 그 위에 표정에 맞는 이모지 붙여주기
 
-	<img src="./img/1.png" width="30%">
-
-- 사진 속 얼굴이 여러개일 때
-
-	<img src="./img/2.png" width="30%"> 
+	- 표정 데이터 가져와서 그에 맞는 이모지 설정 & 얼굴 크기에 맞게 설정하기
+	- "angry":"😠", "disgust":"☹️", "fear":"😨", "laugh":"🤣", "neutral":"😐", "sad":"😭", "surprise":"😮", "smile":"😊", "talking":"🤪"
+	
+		<img src="./img/3.png" width="30%">   <img src="./img/4.png" width="30%">
