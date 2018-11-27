@@ -19,3 +19,5 @@
 	- "angry":"😠", "disgust":"☹️", "fear":"😨", "laugh":"🤣", "neutral":"😐", "sad":"😭", "surprise":"😮", "smile":"😊", "talking":"🤪"
 	
 		<img src="./img/3_.png" width="30%">   <img src="./img/4_.png" width="30%">
+	
+		<img src="./img/5.png" width="30%">   <img src="./img/6.png" width="30%">
