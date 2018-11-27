@@ -9,6 +9,8 @@
 import UIKit
 import Vision
 
+let emoji: [String:String] = ["angry":"😠", "disgust":"☹️", "fear":"😨", "laugh":"🤣", "neutral":"😐", "sad":"😭", "surprise":"😮", "smile":"😊", "talking":"🤪"]
+
 class ViewController: UIViewController {
 
     override func viewDidLoad() {
@@ -25,7 +27,7 @@ class ViewController: UIViewController {
         print("CGRect: \(view.frame.width), \(scaledHeight)")
         
         // set button
-        let button = UIButton(frame: CGRect(x: 100, y: 100, width: 100, height: 50))
+        let button = UIButton(frame: CGRect(x: 100, y: 300, width: 100, height: 50))
         button.backgroundColor = .green
         button.setTitle("get emotion", for: .normal)
         button.addTarget(self, action: #selector(makeEmojiByFaceEmotion), for: .touchUpInside)
@@ -53,16 +55,13 @@ class ViewController: UIViewController {
     }
     
     func makeSticker(faces: [Faces]) {
-//        let faceEmotionOption = ["😠", "☹️", "😨", "🤣", "😐", "😭", "😮", "😊", "🤪"]
-        //angry, disgust, fear, laugh, neutral, sad, surprise, smile, talking
         for face in faces {
             let label = UILabel(frame: CGRect(x: face.roi.x/3, y: face.roi.y/3, width: face.roi.width/2, height: face.roi.height/2))
 
             label.textAlignment = .center
             label.adjustsFontSizeToFitWidth = true
             label.font = label.font.withSize(CGFloat(face.roi.width/2))
-            label.text = "😍"
-            label.backgroundColor = .yellow
+            label.text = emoji[face.emotion.value]
             self.view.addSubview(label)
         }
     }
