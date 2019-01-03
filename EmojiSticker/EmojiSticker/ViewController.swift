@@ -102,7 +102,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     fileprivate func configureFrontCamera(for captureSession: AVCaptureSession) throws -> (device: AVCaptureDevice, resolution: CGSize) {
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .front)
+        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back)
         
         if let device = deviceDiscoverySession.devices.first {
             if let deviceInput = try? AVCaptureDeviceInput(device: device) {
@@ -354,7 +354,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         // Scale and mirror the image to ensure upright presentation.
         let affineTransform = CGAffineTransform(rotationAngle: radiansForDegrees(rotation))
-            .scaledBy(x: scaleX, y: -scaleY)
+            .scaledBy(x: -scaleX, y: -scaleY)
         overlayLayer.setAffineTransform(affineTransform)
         
         // Cover entire screen UI.
@@ -427,8 +427,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             let degrees = 180.0
             let radians = CGFloat(degrees * Double.pi / 180)
             
-            let affineTransform = CGAffineTransform(translationX: faceBounds.origin.x+100, y: faceBounds.origin.y-250)
-                .scaledBy(x: faceBounds.size.width/600, y: faceBounds.size.height/500).rotated(by: radians)
+            let affineTransform = CGAffineTransform(translationX: faceBounds.origin.x+300, y: faceBounds.origin.y-100)
+                .scaledBy(x: faceBounds.size.width/2000, y: faceBounds.size.height/2000).rotated(by: radians)
             faceRyanLayer.setAffineTransform(affineTransform)
             
             let rootLayerBounds = rootLayer.bounds

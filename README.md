@@ -21,3 +21,8 @@
 		<img src="./img/3_.png" width="30%">   <img src="./img/4_.png" width="30%">
 	
 		<img src="./img/5.png" width="30%">   <img src="./img/6.png" width="30%">
+		
+		
+3. AVCaptureVideoDataOutputSampleBufferDelegate를 이용해 이미지 face tracking 구현 (VisionFaceTrack sample 이용)
+
+	<img src="./img/7.gif" width="60%">
