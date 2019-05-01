@@ -13,7 +13,7 @@ import Vision
 let emoji: [String:String] = ["angry":"😠", "disgust":"☹️", "fear":"😨", "laugh":"🤣", "neutral":"😐", "sad":"😭", "surprise":"😮", "smile":"😊", "talking":"🤪"]
 
 class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDelegate {
-
+    
     @IBOutlet weak var previewView: UIView?
     
     var session: AVCaptureSession?
@@ -54,6 +54,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         return .portrait
     }
     
+    // Ensure that the interface stays locked in Portrait.
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .portrait
     }
@@ -102,7 +103,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     fileprivate func configureFrontCamera(for captureSession: AVCaptureSession) throws -> (device: AVCaptureDevice, resolution: CGSize) {
-        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .back)
+        let deviceDiscoverySession = AVCaptureDevice.DiscoverySession(deviceTypes: [.builtInWideAngleCamera], mediaType: .video, position: .front)
         
         if let device = deviceDiscoverySession.devices.first {
             if let deviceInput = try? AVCaptureDeviceInput(device: device) {
@@ -123,11 +124,14 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         throw NSError(domain: "ViewController", code: 1, userInfo: nil)
     }
     
+    /// - Tag: CreateSerialDispatchQueue
     fileprivate func configureVideoDataOutput(for inputDevice: AVCaptureDevice, resolution: CGSize, captureSession: AVCaptureSession) {
         
         let videoDataOutput = AVCaptureVideoDataOutput()
         videoDataOutput.alwaysDiscardsLateVideoFrames = true
         
+        // Create a serial dispatch queue used for the sample buffer delegate as well as when a still image is captured.
+        // A serial dispatch queue must be used to guarantee that video frames will be delivered in order.
         let videoDataOutputQueue = DispatchQueue(label: "com.example.apple-samplecode.VisionFaceTrack")
         videoDataOutput.setSampleBufferDelegate(self, queue: videoDataOutputQueue)
         
@@ -150,6 +154,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         self.captureDeviceResolution = resolution
     }
     
+    /// - Tag: DesignatePreviewLayer
     fileprivate func designatePreviewLayer(for captureSession: AVCaptureSession) {
         let videoPreviewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
         self.previewLayer = videoPreviewLayer
@@ -167,6 +172,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
+    // Removes infrastructure for AVCapture as part of cleanup.
     fileprivate func teardownAVCapture() {
         self.videoDataOutput = nil
         self.videoDataOutputQueue = nil
@@ -177,6 +183,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
     }
     
+    // MARK: Helper Methods for Error Presentation
+    
     fileprivate func presentErrorAlert(withTitle title: String = "Unexpected Failure", message: String) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         self.present(alertController, animated: true)
@@ -185,6 +193,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     fileprivate func presentError(_ error: NSError) {
         self.presentErrorAlert(withTitle: "Failed with error \(error.code)", message: error.localizedDescription)
     }
+    
+    // MARK: Helper Methods for Handling Device Orientation & EXIF
     
     fileprivate func radiansForDegrees(_ degrees: CGFloat) -> CGFloat {
         return CGFloat(Double(degrees) * Double.pi / 180.0)
@@ -211,6 +221,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         return exifOrientationForDeviceOrientation(UIDevice.current.orientation)
     }
     
+    // MARK: Performing Vision Requests
+    
+    /// - Tag: WriteCompletionHandler
     fileprivate func prepareVisionRequest() {
         
         //self.trackingRequests = []
@@ -227,6 +240,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                     return
             }
             DispatchQueue.main.async {
+                // Add the observations to the tracking list
                 for observation in results {
                     let faceTrackingRequest = VNTrackObjectRequest(detectedObjectObservation: observation)
                     requests.append(faceTrackingRequest)
@@ -235,12 +249,15 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             }
         })
         
+        // Start with detection.  Find face, then track it.
         self.detectionRequests = [faceDetectionRequest]
         
         self.sequenceRequestHandler = VNSequenceRequestHandler()
         
         self.setupVisionDrawingLayers()
     }
+    
+    // MARK: Drawing Vision Observations
     
     fileprivate func setupVisionDrawingLayers() {
         let captureDeviceResolution = self.captureDeviceResolution
@@ -291,18 +308,18 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         let faceRyanLayer = CALayer()
         faceRyanLayer.name = "RyanLayer"
-        faceRyanLayer.masksToBounds = true
-        faceRyanLayer.anchorPoint = normalizedCenterPoint
-        faceRyanLayer.bounds = captureDeviceBounds
-        faceRyanLayer.position = CGPoint(x: rootLayer.bounds.midX, y: rootLayer.bounds.midY)
+//        faceRyanLayer.bounds = captureDeviceBounds
+//        faceRyanLayer.anchorPoint = normalizedCenterPoint
+//        faceRyanLayer.position = captureDeviceBoundsCenterPoint
+//        faceRyanLayer.shadowOpacity = 1.0
+//        faceRyanLayer.shadowRadius = 5
+        faceRyanLayer.frame = captureDeviceBounds
+//        faceRyanLayer.backgroundColor = UIColor.red.cgColor
         faceRyanLayer.contents = UIImage(named: "ryan")?.cgImage
-//        let degrees = 0.0
-//        let radians = CGFloat(degrees * Double.pi / 180)
-//        faceRyanLayer.transform = CATransform3DMakeRotation(radians, 0.0, 0.0, 1.0)
         
         overlayLayer.addSublayer(faceRectangleShapeLayer)
-        overlayLayer.addSublayer(faceRyanLayer)
         faceRectangleShapeLayer.addSublayer(faceLandmarksShapeLayer)
+        faceLandmarksShapeLayer.addSublayer(faceRyanLayer)
         rootLayer.addSublayer(overlayLayer)
         
         self.detectionOverlayLayer = overlayLayer
@@ -354,7 +371,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         // Scale and mirror the image to ensure upright presentation.
         let affineTransform = CGAffineTransform(rotationAngle: radiansForDegrees(rotation))
-            .scaledBy(x: -scaleX, y: -scaleY)
+            .scaledBy(x: scaleX, y: -scaleY)
         overlayLayer.setAffineTransform(affineTransform)
         
         // Cover entire screen UI.
@@ -413,9 +430,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     }
     
     fileprivate func drawRyanObservations(_ faceObservations: [VNFaceObservation]) {
-        guard let faceRyanLayer = self.detectionRyanLayer,
-            let rootLayer = self.rootLayer
-            else {
+        guard let rootLayer = self.rootLayer else {
+                return
+        }
+        guard let faceRyanLayer = self.detectionRyanLayer else {
                 return
         }
         
@@ -424,11 +442,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         for faceObservation in faceObservations {
             let faceBounds = VNImageRectForNormalizedRect(faceObservation.boundingBox, Int(displaySize.width), Int(displaySize.height))
             
-            let degrees = 180.0
-            let radians = CGFloat(degrees * Double.pi / 180)
-            
-            let affineTransform = CGAffineTransform(translationX: faceBounds.origin.x+300, y: faceBounds.origin.y-100)
-                .scaledBy(x: faceBounds.size.width/2000, y: faceBounds.size.height/2000).rotated(by: radians)
+            let affineTransform = CGAffineTransform(translationX: faceBounds.origin.x+100, y: faceBounds.origin.y-250)
+                .scaledBy(x: faceBounds.size.width/500, y: faceBounds.size.height/500).rotated(by: radiansForDegrees(180))
             faceRyanLayer.setAffineTransform(affineTransform)
             
             let rootLayerBounds = rootLayer.bounds
@@ -436,8 +451,10 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         }
         
         self.updateLayerGeometry()
+        CATransaction.commit()
     }
     
+    /// - Tag: DrawPaths
     fileprivate func drawFaceObservations(_ faceObservations: [VNFaceObservation]) {
         guard let faceRectangleShapeLayer = self.detectedFaceRectangleShapeLayer,
             let faceLandmarksShapeLayer = self.detectedFaceLandmarksShapeLayer
@@ -466,6 +483,9 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         CATransaction.commit()
     }
     
+    // MARK: AVCaptureVideoDataOutputSampleBufferDelegate
+    /// - Tag: PerformRequests
+    // Handle delegate method callback on receiving a sample buffer.
     public func captureOutput(_ output: AVCaptureOutput, didOutput sampleBuffer: CMSampleBuffer, from connection: AVCaptureConnection) {
         
         var requestHandlerOptions: [VNImageOption: AnyObject] = [:]
@@ -583,21 +603,5 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
                 NSLog("Failed to perform FaceLandmarkRequest: %@", error)
             }
         }
-    }
-}
-
-extension UIView {
-    func capture(_ shadow: Bool = false) -> UIImage? {
-        UIGraphicsBeginImageContextWithOptions(self.frame.size, false, 0.0)
-        guard let context = UIGraphicsGetCurrentContext() else {
-            return nil
-        }
-        self.layer.render(in: context)
-        guard let image = UIGraphicsGetImageFromCurrentImageContext() else {
-            return nil
-        }
-        
-        UIGraphicsEndImageContext()
-        return image
     }
 }
