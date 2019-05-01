@@ -39,6 +39,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.makeMenuButton()
+        
         self.session = self.setupAVCaptureSession()
         
         self.prepareVisionRequest()
@@ -57,6 +59,14 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     // Ensure that the interface stays locked in Portrait.
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .portrait
+    }
+    
+    fileprivate func makeMenuButton() {
+//        self.previewView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.size.width, height: UIScreen.main.bounds.size.height-200)
+        var menuButton = UIButton(frame: CGRect(x: 20, y: 450, width: 100, height: 50))
+        menuButton.setTitle("S", for: .normal)
+        self.previewView?.addSubview(menuButton)
+        
     }
     
     fileprivate func setupAVCaptureSession() -> AVCaptureSession? {
@@ -308,13 +318,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         let faceRyanLayer = CALayer()
         faceRyanLayer.name = "RyanLayer"
-//        faceRyanLayer.bounds = captureDeviceBounds
-//        faceRyanLayer.anchorPoint = normalizedCenterPoint
-//        faceRyanLayer.position = captureDeviceBoundsCenterPoint
-//        faceRyanLayer.shadowOpacity = 1.0
-//        faceRyanLayer.shadowRadius = 5
         faceRyanLayer.frame = captureDeviceBounds
-//        faceRyanLayer.backgroundColor = UIColor.red.cgColor
         faceRyanLayer.contents = UIImage(named: "ryan")?.cgImage
         
         overlayLayer.addSublayer(faceRectangleShapeLayer)
@@ -337,6 +341,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
             else {
                 return
         }
+        
+        self.makeMenuButton()
         
         CATransaction.setValue(NSNumber(value: true), forKey: kCATransactionDisableActions)
         
@@ -442,7 +448,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         for faceObservation in faceObservations {
             let faceBounds = VNImageRectForNormalizedRect(faceObservation.boundingBox, Int(displaySize.width), Int(displaySize.height))
             
-            let affineTransform = CGAffineTransform(translationX: faceBounds.origin.x+100, y: faceBounds.origin.y-250)
+            let affineTransform = CGAffineTransform(translationX: faceBounds.origin.x+150, y: faceBounds.origin.y-200)
                 .scaledBy(x: faceBounds.size.width/500, y: faceBounds.size.height/500).rotated(by: radiansForDegrees(180))
             faceRyanLayer.setAffineTransform(affineTransform)
             
