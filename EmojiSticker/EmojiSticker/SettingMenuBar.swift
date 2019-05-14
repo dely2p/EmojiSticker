@@ -74,6 +74,12 @@ class SettingMenuBar: NSObject, UICollectionViewDataSource, UICollectionViewDele
         return cell
     }
     
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        let cell = collectionView.cellForItem(at: indexPath)
+//        cell?.layer.borderWidth = 5.0
+//        cell?.layer.borderColor = UIColor.yellow.cgColor
+//    }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width/4, height: collectionView.bounds.height/3)
     }

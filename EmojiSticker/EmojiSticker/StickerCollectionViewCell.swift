@@ -14,6 +14,13 @@ class BaseCell: UICollectionViewCell {
         setupImageView()
     }
     
+    override var isSelected: Bool {
+        didSet {
+            self.layer.borderWidth = 1.5
+            self.layer.borderColor = isSelected ? UIColor.yellow.cgColor : UIColor.black.cgColor
+        }
+    }
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError()
     }
@@ -24,6 +31,7 @@ class BaseCell: UICollectionViewCell {
 
 class StickerCollectionViewCell: BaseCell {
     static var identifier: String = "StickerCell"
+    
     let stickerImage: UIImageView = {
         let image  = UIImageView()
         image.translatesAutoresizingMaskIntoConstraints = false
