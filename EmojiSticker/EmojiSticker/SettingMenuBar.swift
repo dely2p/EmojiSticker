@@ -8,9 +8,12 @@
 
 import UIKit
 
+let StickerItem: [String] = ["p_smile", "d_smile"]
+
 class SettingMenuBar: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     let blackView = UIView()
+    var indexOfSelectedSticker: Int = 0
     
     let stickerMenuView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
@@ -21,7 +24,7 @@ class SettingMenuBar: NSObject, UICollectionViewDataSource, UICollectionViewDele
     }()
     
     let stickers: [Stickers] = {
-        return [Stickers(image: UIImage(named: "p_smile")!), Stickers(image: UIImage(named: "d_smile")!)]
+        return [Stickers(named: "p_smile"), Stickers(named: "d_smile")]
     }()
     
     override init() {
@@ -74,11 +77,10 @@ class SettingMenuBar: NSObject, UICollectionViewDataSource, UICollectionViewDele
         return cell
     }
     
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let cell = collectionView.cellForItem(at: indexPath)
-//        cell?.layer.borderWidth = 5.0
-//        cell?.layer.borderColor = UIColor.yellow.cgColor
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        indexOfSelectedSticker = indexPath.item
+        NotificationCenter.default.post(name: NSNotification.Name("updateStickerImage"), object: nil)
+    }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: collectionView.bounds.width/4, height: collectionView.bounds.height/3)

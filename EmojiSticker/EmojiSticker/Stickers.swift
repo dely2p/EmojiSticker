@@ -10,7 +10,7 @@ import UIKit
 
 class Stickers: NSObject {
     let image: UIImage
-    init(image: UIImage) {
-        self.image = image
+    init(named: String) {
+        self.image = UIImage(named: named)!
     }
 }

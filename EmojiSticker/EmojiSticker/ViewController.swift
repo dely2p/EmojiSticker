@@ -36,8 +36,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     lazy var sequenceRequestHandler = VNSequenceRequestHandler()
     
-    let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: 320, height: 300))
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -49,8 +47,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         
         self.session?.startRunning()
         
-        
-
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateStickerImage), name: Notification.Name("updateStickerImage"), object: nil)
     }
     
     override func didReceiveMemoryWarning() {
@@ -65,13 +62,26 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         return .portrait
     }
     
-    
-    
     fileprivate func makeMenuButton() {
         let menuButton = UIButton(frame: CGRect(x: 20, y: 450, width: 100, height: 50))
         menuButton.setTitle("S", for: .normal)
         menuButton.addTarget(self, action: #selector(handleMore), for: .touchUpInside)
         self.previewView?.addSubview(menuButton)
+    }
+    
+    @objc func updateStickerImage() {
+        guard let _ = rootLayer else { return }
+        
+        rootLayer?.sublayers?.removeAll()
+
+        self.makeMenuButton()
+        
+        self.session = self.setupAVCaptureSession()
+        
+        self.prepareVisionRequest()
+        
+        self.session?.startRunning()
+        
     }
     
     let settingMenuBar = SettingMenuBar()
@@ -327,10 +337,13 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         faceLandmarksShapeLayer.shadowOpacity = 0.7
         faceLandmarksShapeLayer.shadowRadius = 5
         
+        let index = settingMenuBar.indexOfSelectedSticker
+        let name = StickerItem[index]
+        
         let faceRyanLayer = CALayer()
         faceRyanLayer.name = "RyanLayer"
         faceRyanLayer.frame = captureDeviceBounds
-        faceRyanLayer.contents = UIImage(named: "ryan")?.cgImage
+        faceRyanLayer.contents = UIImage(named: name)?.cgImage
         
         overlayLayer.addSublayer(faceRectangleShapeLayer)
         faceRectangleShapeLayer.addSublayer(faceLandmarksShapeLayer)
