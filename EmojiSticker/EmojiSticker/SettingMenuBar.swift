@@ -15,13 +15,13 @@ class SettingMenuBar: NSObject, UICollectionViewDataSource, UICollectionViewDele
     let stickerMenuView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.backgroundColor = UIColor.white
+        cv.backgroundColor = UIColor.init(white: 0, alpha: 0.5)
         cv.alwaysBounceVertical = true
         return cv
     }()
     
     let stickers: [Stickers] = {
-        return [Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!)]
+        return [Stickers(image: UIImage(named: "p_smile")!), Stickers(image: UIImage(named: "d_smile")!)]
     }()
     
     override init() {
@@ -34,9 +34,9 @@ class SettingMenuBar: NSObject, UICollectionViewDataSource, UICollectionViewDele
     
     func showSettings() {
         if let window = UIApplication.shared.keyWindow {
-            blackView.backgroundColor = UIColor.init(white: 0, alpha: 0.5)
+            blackView.backgroundColor = UIColor.init(white: 0, alpha: 0.2)
             blackView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(dismissSetting)))
-            
+
             window.addSubview(blackView)
             window.addSubview(stickerMenuView)
             
