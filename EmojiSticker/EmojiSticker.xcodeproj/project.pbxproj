@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A308C9E1228AAD8D000AA0D1 /* SettingMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A308C9E0228AAD8D000AA0D1 /* SettingMenuBar.swift */; };
+		A308C9E3228AB6E5000AA0D1 /* StickerCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = A308C9E2228AB6E5000AA0D1 /* StickerCollectionViewCell.swift */; };
+		A308C9E7228AC2CC000AA0D1 /* Stickers.swift in Sources */ = {isa = PBXBuildFile; fileRef = A308C9E6228AC2CC000AA0D1 /* Stickers.swift */; };
 		A3B3716821A69474005EC4C9 /* FaceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3716721A69474005EC4C9 /* FaceInfo.swift */; };
 		A3B3716A21A6949B005EC4C9 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3716921A6949B005EC4C9 /* Info.swift */; };
 		A3B3716C21A694B1005EC4C9 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3716B21A694B1005EC4C9 /* Size.swift */; };
@@ -24,6 +26,8 @@
 
 /* Begin PBXFileReference section */
 		A308C9E0228AAD8D000AA0D1 /* SettingMenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMenuBar.swift; sourceTree = "<group>"; };
+		A308C9E2228AB6E5000AA0D1 /* StickerCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StickerCollectionViewCell.swift; sourceTree = "<group>"; };
+		A308C9E6228AC2CC000AA0D1 /* Stickers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Stickers.swift; sourceTree = "<group>"; };
 		A3B3716721A69474005EC4C9 /* FaceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceInfo.swift; sourceTree = "<group>"; };
 		A3B3716921A6949B005EC4C9 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		A3B3716B21A694B1005EC4C9 /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
@@ -84,6 +88,8 @@
 				A3B3717321A6AF7C005EC4C9 /* URLSessionManager.swift */,
 				A3FF5D3321AC15EA0087EC47 /* PlaceInfo.swift */,
 				A308C9E0228AAD8D000AA0D1 /* SettingMenuBar.swift */,
+				A308C9E2228AB6E5000AA0D1 /* StickerCollectionViewCell.swift */,
+				A308C9E6228AC2CC000AA0D1 /* Stickers.swift */,
 			);
 			path = EmojiSticker;
 			sourceTree = "<group>";
@@ -120,6 +126,7 @@
 				TargetAttributes = {
 					A3DC787B219DA1F000060F6B = {
 						CreatedOnToolsVersion = 10.1;
+						LastSwiftMigration = 1020;
 					};
 				};
 			};
@@ -160,6 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A3FF5D3421AC15EA0087EC47 /* PlaceInfo.swift in Sources */,
+				A308C9E7228AC2CC000AA0D1 /* Stickers.swift in Sources */,
 				A3B3716E21A694EA005EC4C9 /* Faces.swift in Sources */,
 				A3B3716821A69474005EC4C9 /* FaceInfo.swift in Sources */,
 				A3B3716C21A694B1005EC4C9 /* Size.swift in Sources */,
@@ -167,6 +175,7 @@
 				A308C9E1228AAD8D000AA0D1 /* SettingMenuBar.swift in Sources */,
 				A3B3717421A6AF7C005EC4C9 /* URLSessionManager.swift in Sources */,
 				A3DC7882219DA1F000060F6B /* ViewController.swift in Sources */,
+				A308C9E3228AB6E5000AA0D1 /* StickerCollectionViewCell.swift in Sources */,
 				A3B3717021A69500005EC4C9 /* FaceData.swift in Sources */,
 				A3DC7880219DA1F000060F6B /* AppDelegate.swift in Sources */,
 			);
@@ -323,7 +332,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dely.EmojiSticker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -341,7 +350,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = dely.EmojiSticker;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

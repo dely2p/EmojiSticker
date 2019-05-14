@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SettingMenuBar: NSObject {
+class SettingMenuBar: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     let blackView = UIView()
     
@@ -16,11 +16,20 @@ class SettingMenuBar: NSObject {
         let layout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
         cv.backgroundColor = UIColor.white
+        cv.alwaysBounceVertical = true
         return cv
+    }()
+    
+    let stickers: [Stickers] = {
+        return [Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!), Stickers(image: UIImage(named: "ryan")!)]
     }()
     
     override init() {
         super.init()
+        
+        stickerMenuView.dataSource = self
+        stickerMenuView.delegate = self
+        stickerMenuView.register(StickerCollectionViewCell.self, forCellWithReuseIdentifier: StickerCollectionViewCell.identifier)
     }
     
     func showSettings() {
@@ -53,4 +62,24 @@ class SettingMenuBar: NSObject {
             }
         })
     }
+    
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return stickers.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: StickerCollectionViewCell.identifier, for: indexPath) as! StickerCollectionViewCell
+        let stickerSetting = stickers[indexPath.item]
+        cell.setting = stickerSetting
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: collectionView.bounds.width/4, height: collectionView.bounds.height/3)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10) //.zero
+    }
+
 }
