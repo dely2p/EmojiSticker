@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A308C9E1228AAD8D000AA0D1 /* SettingMenuBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = A308C9E0228AAD8D000AA0D1 /* SettingMenuBar.swift */; };
 		A3B3716821A69474005EC4C9 /* FaceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3716721A69474005EC4C9 /* FaceInfo.swift */; };
 		A3B3716A21A6949B005EC4C9 /* Info.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3716921A6949B005EC4C9 /* Info.swift */; };
 		A3B3716C21A694B1005EC4C9 /* Size.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3B3716B21A694B1005EC4C9 /* Size.swift */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A308C9E0228AAD8D000AA0D1 /* SettingMenuBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingMenuBar.swift; sourceTree = "<group>"; };
 		A3B3716721A69474005EC4C9 /* FaceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FaceInfo.swift; sourceTree = "<group>"; };
 		A3B3716921A6949B005EC4C9 /* Info.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Info.swift; sourceTree = "<group>"; };
 		A3B3716B21A694B1005EC4C9 /* Size.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Size.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 				A3B3716F21A69500005EC4C9 /* FaceData.swift */,
 				A3B3717321A6AF7C005EC4C9 /* URLSessionManager.swift */,
 				A3FF5D3321AC15EA0087EC47 /* PlaceInfo.swift */,
+				A308C9E0228AAD8D000AA0D1 /* SettingMenuBar.swift */,
 			);
 			path = EmojiSticker;
 			sourceTree = "<group>";
@@ -161,6 +164,7 @@
 				A3B3716821A69474005EC4C9 /* FaceInfo.swift in Sources */,
 				A3B3716C21A694B1005EC4C9 /* Size.swift in Sources */,
 				A3B3716A21A6949B005EC4C9 /* Info.swift in Sources */,
+				A308C9E1228AAD8D000AA0D1 /* SettingMenuBar.swift in Sources */,
 				A3B3717421A6AF7C005EC4C9 /* URLSessionManager.swift in Sources */,
 				A3DC7882219DA1F000060F6B /* ViewController.swift in Sources */,
 				A3B3717021A69500005EC4C9 /* FaceData.swift in Sources */,

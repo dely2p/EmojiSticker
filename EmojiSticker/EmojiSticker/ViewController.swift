@@ -36,7 +36,6 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
     
     lazy var sequenceRequestHandler = VNSequenceRequestHandler()
     
-    var menuView = UIView(frame: CGRect(x: 0, y: 350, width: 400, height: 250))
     let scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: 320, height: 300))
     
     override func viewDidLoad() {
@@ -62,22 +61,23 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         return .portrait
     }
     
-    // Ensure that the interface stays locked in Portrait.
     override var preferredInterfaceOrientationForPresentation: UIInterfaceOrientation {
         return .portrait
     }
     
+    
+    
     fileprivate func makeMenuButton() {
-        var menuButton = UIButton(frame: CGRect(x: 20, y: 450, width: 100, height: 50))
+        let menuButton = UIButton(frame: CGRect(x: 20, y: 450, width: 100, height: 50))
         menuButton.setTitle("S", for: .normal)
-        menuButton.addTarget(self, action: #selector(showAllSticker), for: .touchUpInside)
+        menuButton.addTarget(self, action: #selector(handleMore), for: .touchUpInside)
         self.previewView?.addSubview(menuButton)
-        
     }
     
-    @objc fileprivate func showAllSticker() {
-        menuView.backgroundColor = UIColor.yellow.withAlphaComponent(0.5)
-        self.previewView?.addSubview(menuView)
+    let settingMenuBar = SettingMenuBar()
+    
+    @objc fileprivate func handleMore() {
+        settingMenuBar.showSettings()
     }
     
     fileprivate func setupAVCaptureSession() -> AVCaptureSession? {
