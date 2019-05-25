@@ -26,3 +26,6 @@
 3. AVCaptureVideoDataOutputSampleBufferDelegate를 이용해 이미지 face tracking 구현 (VisionFaceTrack sample 이용)
 
 	<img src="./img/7.gif" width="60%">
+	
+4. Sticker Menu Bar 구현
+	<img src="./img/8.gif" width="60%">

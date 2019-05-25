@@ -9,6 +9,7 @@
 import UIKit
 import AVKit
 import Vision
+import ARKit
 
 let emoji: [String:String] = ["angry":"😠", "disgust":"☹️", "fear":"😨", "laugh":"🤣", "neutral":"😐", "sad":"😭", "surprise":"😮", "smile":"😊", "talking":"🤪"]
 
@@ -48,6 +49,7 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         self.session?.startRunning()
         
         NotificationCenter.default.addObserver(self, selector: #selector(self.updateStickerImage), name: Notification.Name("updateStickerImage"), object: nil)
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -472,8 +474,8 @@ class ViewController: UIViewController, AVCaptureVideoDataOutputSampleBufferDele
         for faceObservation in faceObservations {
             let faceBounds = VNImageRectForNormalizedRect(faceObservation.boundingBox, Int(displaySize.width), Int(displaySize.height))
             
-            let affineTransform = CGAffineTransform(translationX: faceBounds.origin.x+150, y: faceBounds.origin.y-200)
-                .scaledBy(x: faceBounds.size.width/500, y: faceBounds.size.height/500).rotated(by: radiansForDegrees(180))
+            let affineTransform = CGAffineTransform(translationX: faceBounds.origin.x+200, y: faceBounds.origin.y-200)
+                .scaledBy(x: faceBounds.size.width/1000, y: faceBounds.size.height/500).rotated(by: radiansForDegrees(180))
             faceRyanLayer.setAffineTransform(affineTransform)
             
             let rootLayerBounds = rootLayer.bounds
