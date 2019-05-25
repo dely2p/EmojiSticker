@@ -28,4 +28,7 @@
 	<img src="./img/7.gif" width="60%">
 	
 4. Sticker Menu Bar 구현
+	- 메뉴 바가 밑에서 올라오는 애니메이션 구현
+	- 메뉴 바 활성화 시 기존 배경 약간 어두워지고, 비활성화 시 다시 밝아지도록 구현
+
 	<img src="./img/8.gif" width="60%">
